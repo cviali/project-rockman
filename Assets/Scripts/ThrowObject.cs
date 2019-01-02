@@ -5,21 +5,22 @@ using UnityEngine;
 public class ThrowObject : MonoBehaviour {
     public GameObject prefab;
     public Vector2 throwForce;
-    float moveDirect;
     public float fireRate = 0.5f;
     public bool enable;
     public Transform bulletStartPos;
-    PlayerController pc;
+    public PlayerController pc;
+    float moveDirect = 0f;
 
     void Start()
     {
         pc = GetComponent<PlayerController>();
+        moveDirect = pc.transform.localScale.x;
+        Throw();
     }
 
 	// Use this for initialization
 	void OnEnable () {
         enable = true;
-        
         Throw();
 	}
     void OnDisable()
@@ -35,7 +36,7 @@ public class ThrowObject : MonoBehaviour {
         }
         moveDirect = pc.transform.localScale.x;
         throwForce = new Vector2(moveDirect * 150f, 0f);
-        GameObject obj = Instantiate(prefab, bulletStartPos.position, Quaternion.identity); // intantiate membuat object baru ke dalam scene
+        GameObject obj = Instantiate(prefab, bulletStartPos.position, Quaternion.identity); // intsantiate membuat object baru ke dalam scene
         Rigidbody2D rb = obj.GetComponent<Rigidbody2D>();
         rb.AddForce(throwForce);
         Invoke("Throw", fireRate);

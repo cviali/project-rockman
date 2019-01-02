@@ -82,11 +82,19 @@ public class PlayerController : MonoBehaviour {
         if (isDead) return;
 
         Camera cam = Camera.main;
-        cam.transform.position = new Vector3(
-            transform.position.x,
-            cam.transform.position.y,
-            cam.transform.position.z
-        );
+
+        Vector3 camPosition = new Vector3(transform.position.x, cam.transform.position.y, cam.transform.position.z);
+
+        if (camPosition.x >= 13.6f || camPosition.y >= -0.75f)
+        {
+            camPosition = new Vector3(cam.transform.position.x, transform.position.y, cam.transform.position.z);
+            cam.transform.position = camPosition;
+        } else
+        {
+            camPosition = new Vector3(transform.position.x, cam.transform.position.y, cam.transform.position.z);
+            camPosition.y = -1.511f;
+            cam.transform.position = camPosition;
+        }
     }
 
 
