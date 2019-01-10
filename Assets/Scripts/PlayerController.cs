@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour {
 
@@ -10,14 +12,25 @@ public class PlayerController : MonoBehaviour {
     bool isJumping;
     bool isDead;
     bool isShoot;
+    public bool isClimbing;
     public int moveDirection;
+    public int moveVertical;
+    int life = 3;
     public float jumpForce = 200f;
+    public float distance;
+    public LayerMask ladder;
+
+    public Text lifeText, gameOverScreenText;
+    public GameObject gameOverScreen;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
+
+        gameOverScreenText.text = "";
+        gameOverScreen.SetActive(false);
     }
 
     private void Lari()
@@ -35,15 +48,51 @@ public class PlayerController : MonoBehaviour {
         if (currentVelocityX < maxSpeedX &&
             currentVelocityX > -maxSpeedX)
         {
-            rb.AddForce(new Vector2(10f * moveDirection, 0f));
+            rb.velocity = new Vector2(moveDirection, rb.velocity.y);
         }
     }
-    void FixedUpdate()
+
+
+    
+
+void FixedUpdate()
     {
-        if (isDead) return;
+        if (isDead)
+        {
+            gameOverScreenText.text = "Game Over!";
+            gameOverScreen.SetActive(true);
+        } 
         Lari();
         Lompat();
         Nembak();
+
+        RaycastHit2D hitInfo = Physics2D.Raycast(transform.position, Vector2.up, distance, ladder);
+
+        if (hitInfo.collider != null)
+        {
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                isClimbing = true;
+                anim.SetBool("Climb", true);
+            }
+            else if(Input.GetKeyUp(KeyCode.UpArrow))
+            {
+                isClimbing = false;
+                anim.SetBool("Climb", false);
+            }
+
+            if (isClimbing == true)
+            {
+                moveVertical = (int)Input.GetAxisRaw("Vertical");
+                rb.velocity = new Vector2(rb.velocity.x, moveVertical);
+                rb.gravityScale = 0;
+            }
+            else
+            {
+                rb.gravityScale = 1;
+            }
+        }
+        lifeText.text = "Life: " + life;
     }
 
     void Lompat()
@@ -80,21 +129,6 @@ public class PlayerController : MonoBehaviour {
     void LateUpdate()
     {
         if (isDead) return;
-
-        Camera cam = Camera.main;
-
-        Vector3 camPosition = new Vector3(transform.position.x, cam.transform.position.y, cam.transform.position.z);
-
-        if (camPosition.x >= 13.6f || camPosition.y >= -0.75f)
-        {
-            camPosition = new Vector3(cam.transform.position.x, transform.position.y, cam.transform.position.z);
-            cam.transform.position = camPosition;
-        } else
-        {
-            camPosition = new Vector3(transform.position.x, cam.transform.position.y, cam.transform.position.z);
-            camPosition.y = -1.511f;
-            cam.transform.position = camPosition;
-        }
     }
 
 
@@ -120,7 +154,6 @@ public class PlayerController : MonoBehaviour {
         if (obj.CompareTag("Enemy"))
         {
             isDead = true;
-            anim.SetTrigger("IsHitted");
         }
     }
 }

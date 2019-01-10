@@ -10,9 +10,9 @@ public class DelayedDestroy : MonoBehaviour {
 	void Start () {
         Invoke("Destroy", delay);
 	}
-	
-	// Update is called once per frame
-	void Destroy() {
+
+    // Update is called once per frame
+    void Destroy() {
         Destroy(gameObject);
 	}
 }

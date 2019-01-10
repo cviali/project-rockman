@@ -15,14 +15,13 @@ public class ladder : MonoBehaviour {
 		
 	}
 
-    void onTriggerStay2D(Collider2D other)
+    void onTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("Masuk");
-        if (/*other.tag == "Player" &&*/ Input.GetKey(KeyCode.UpArrow))
+        if (other.tag == "Player" && Input.GetKey(KeyCode.UpArrow))
         {
             other.GetComponent<Rigidbody2D>().velocity = new Vector2(0, speed);
         }
-        else if (/*other.tag == "Player" &&*/ Input.GetKey(KeyCode.DownArrow))
+        else if (other.tag == "Player" && Input.GetKey(KeyCode.DownArrow))
         {
             other.GetComponent<Rigidbody2D>().velocity = new Vector2(0, -speed);
         }

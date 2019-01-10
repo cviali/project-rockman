@@ -8,7 +8,7 @@ public class HorizontalMove : MonoBehaviour
     Rigidbody2D rb; // reference to rigidbody2d of the attached gameobject
     public float movementSpeed = 0.5f;
     //public Transform frontbottom = null;
-    private float localScaleX = 1f;
+    private float localScaleX = 2.599921f;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
