@@ -12,4 +12,9 @@ public class Restart : MonoBehaviour
         //SceneManager.LoadScene("Level2");
     }
 
+    public void MainMenu()
+    {
+        SceneManager.LoadScene("MainMeny");
+    }
+
 }

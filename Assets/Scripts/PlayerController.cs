@@ -19,8 +19,6 @@ public class PlayerController : MonoBehaviour {
     public float jumpForce = 200f;
     public float distance;
     public LayerMask ladder;
-
-    public Text lifeText, gameOverScreenText;
     public GameObject gameOverScreen;
 
     void Start()
@@ -28,8 +26,6 @@ public class PlayerController : MonoBehaviour {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
-
-        gameOverScreenText.text = "";
         gameOverScreen.SetActive(false);
     }
 
@@ -59,7 +55,6 @@ void FixedUpdate()
     {
         if (isDead)
         {
-            gameOverScreenText.text = "Game Over!";
             gameOverScreen.SetActive(true);
         } 
         Lari();
@@ -92,7 +87,6 @@ void FixedUpdate()
                 rb.gravityScale = 1;
             }
         }
-        lifeText.text = "Life: " + life;
     }
 
     void Lompat()
