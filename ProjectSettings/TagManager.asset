@@ -8,6 +8,12 @@ TagManager:
   - Ladder
   - Bullet
   - EnemyBullet
+  - Boss
+  - Coin
+  - CoinHP
+  - CompleteMark
+  - Hazard
+  - CompleteMark2
   layers:
   - Default
   - TransparentFX

@@ -11,8 +11,8 @@ public class EnemyController : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D col)
     {
         //destroy enemy and bullet
+        //GameObject explosion = Instantiate()
         CekEnemy(col.gameObject);
-        Destroy(col.gameObject);
     }
 
     void CekEnemy(GameObject obj)

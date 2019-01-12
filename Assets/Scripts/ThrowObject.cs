@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ThrowObject : MonoBehaviour {
+    public int bulletCount;
     public GameObject prefab;
     public Vector2 throwForce;
     public float fireRate = 0.5f;
@@ -28,7 +29,7 @@ public class ThrowObject : MonoBehaviour {
         // set var buat stop
         enable = false;
     }
-
+    
     void Throw() {
         if (!enable)
         {
@@ -39,6 +40,7 @@ public class ThrowObject : MonoBehaviour {
         GameObject obj = Instantiate(prefab, bulletStartPos.position, Quaternion.identity); // intsantiate membuat object baru ke dalam scene
         Rigidbody2D rb = obj.GetComponent<Rigidbody2D>();
         rb.AddForce(throwForce);
+        bulletCount++;
         Invoke("Throw", fireRate);
 	}
 }

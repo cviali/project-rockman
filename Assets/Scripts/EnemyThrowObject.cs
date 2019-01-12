@@ -4,23 +4,26 @@ using UnityEngine;
 
 public class EnemyThrowObject : MonoBehaviour {
     public GameObject prefab;
-    public Vector2 throwForce;
     public float fireRate = 0.5f;
+    public float throwX = 70f;
     public bool enable;
     public Transform bulletStartPos;
     float moveDirect = 0f;
     Animator anim;
-
     void Start()
     {
         anim = GetComponent<Animator>();
     }
 
     // Use this for initialization
-    void OnEnable()
+    void OnBecameVisible()
     {
         enable = true;
-        Throw();
+    }
+
+    void OnBecameInvisible()
+    {
+        enable = false;
     }
 
     void Throw()
@@ -31,8 +34,7 @@ public class EnemyThrowObject : MonoBehaviour {
         }
         GameObject obj = Instantiate(prefab, bulletStartPos.position, Quaternion.identity); // intsantiate membuat object baru ke dalam scene
         Rigidbody2D rb = obj.GetComponent<Rigidbody2D>();
-        rb.AddForce(throwForce);
-        Invoke("Throw", fireRate);
+        rb.AddForce(new Vector2(throwX * transform.localScale.x, 150f));
     }
 }
 
